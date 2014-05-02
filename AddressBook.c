@@ -1,20 +1,6 @@
 #include <stdio.h>
 #include <string.h>
 
-void flushStdin(char* input, unsigned long len);
-
-void flushStdin(char* input, unsigned long len)
-{
-    char buff[16] = "\0";
-    
-    if (input[len-1] != '\n')
-        do {
-            fgets(buff, 16, stdin);
-        } while (buff[strlen(buff)-1] != '\n');
-    else
-        input[len-1]='\0';
-}
-
 int main()
 {
 	char addresses[10][30];
@@ -34,7 +20,6 @@ int main()
 				if(numAddresses < 10)
 				{
 					printf("Enter Address: ");
-					//flushStdin(addresses[numAddresses], 29);
 					fgets(addresses[numAddresses], 29, stdin);
 					numAddresses++;
 					printf("Saved.\n");
