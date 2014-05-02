@@ -1,4 +1,19 @@
 #include <stdio.h>
+#include <string.h>
+
+void flushStdin(char* input, unsigned long len);
+
+void flushStdin(char* input, unsigned long len)
+{
+    char buff[16] = "\0";
+    
+    if (input[len-1] != '\n')
+        do {
+            fgets(buff, 16, stdin);
+        } while (buff[strlen(buff)-1] != '\n');
+    else
+        input[len-1]='\0';
+}
 
 int main()
 {
@@ -9,26 +24,30 @@ int main()
 	while(userInput != '3')
 	{
 		printf("\n1) Enter address(%d/10)\n2) List addresses\n3) Quit\n", numAddresses);
-		scanf("%c", &userInput);
+		scanf("%1c", &userInput);
+		getchar();
 
 		switch(userInput)
 		{
 			case '1':
-				printf("Enter Address: ");
-				getchar();
-				fgets(addresses[numAddresses], 29, stdin);
-				getchar();
-				numAddresses++;
+
+				if(numAddresses < 10)
+				{
+					printf("Enter Address: ");
+					//flushStdin(addresses[numAddresses], 29);
+					fgets(addresses[numAddresses], 29, stdin);
+					numAddresses++;
+					printf("Saved.\n");
+				} 
+				else printf("\nYou can only enter 10 addresses.");
 			break;
 
 			case '2':
-				if(numAddresses <= 0)
-					printf("You have not addresses.\n");
+				if(numAddresses <= 0) printf("\nYou have not addresses.\n");
 				else
 				{
 					printf("\nAddresses: \n");
-					for(int i = 0; i < numAddresses; i++)
-						printf("Address #%d: %s\n", i + 1, addresses[i]);
+					for(int i = 0; i < numAddresses; i++) printf("Address #%d: %s", i + 1, addresses[i]);
 				}
 			break;
 
