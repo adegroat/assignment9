@@ -1,31 +1,45 @@
 #include <stdio.h>
 
 int main()
-{	
+{
 	char addresses[10][30];
 	int numAddresses = 0;
-	int userInput = 0;
+	char userInput = '\0';
 
-	do
+	while(userInput != '3')
 	{
-		userInput = 0;
-		printf("1. Enter Address\n2. List Addresses(%d total)\n3. Quit\n", numAddresses);
-		scanf("%1d", &userInput);
+		printf("\n1) Enter address(%d/10)\n2) List addresses\n3) Quit\n", numAddresses);
+		scanf("%c", &userInput);
 
-		fflush(stdin);
-
-		if(userInput == 1)
+		switch(userInput)
 		{
-			printf("Address: ");
-			fgets(addresses[numAddresses], 29, stdin);
+			case '1':
+				printf("Enter Address: ");
+				getchar();
+				fgets(addresses[numAddresses], 29, stdin);
+				getchar();
+				numAddresses++;
+			break;
+
+			case '2':
+				if(numAddresses <= 0)
+					printf("You have not addresses.\n");
+				else
+				{
+					printf("\nAddresses: \n");
+					for(int i = 0; i < numAddresses; i++)
+						printf("Address #%d: %s\n", i + 1, addresses[i]);
+				}
+			break;
+
+			case '3':
+			break;
+
+			default:
+				printf("Invalid choice.\n");
 		}
 
-		if(userInput == 2)
-		{
-
-		}
-
-	} while(numAddresses < 10 && userInput != 3);
+	}
 
 	return 0;
 }
